@@ -57,7 +57,7 @@ rt_uint8_t *rt_hw_stack_init(void *tentry, void *parameter,
         *(--stk) = SVCMODE;                 /* arm mode   */
 
 #if defined(__TI_VFP_SUPPORT__) || (defined (__VFP_FP__) && !defined(__SOFTFP__))
-#ifndef RT_VFP_LAZY_STACKING
+#ifdef RT_VFP_LAZY_STACKING
     {
         int i;
 

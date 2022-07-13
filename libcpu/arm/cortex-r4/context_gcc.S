@@ -72,8 +72,8 @@ __no_vfp_frame1:
     STR     sp, [r0]            @ store sp in preempted tasks TCB
     LDR     sp, [r1]            @ get new task stack pointer
 
-#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
         LDMIA   sp!, {r0}       @ get fpexc
+#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
         VMSR    fpexc,  r0      @ restore fpexc
         TST     r0,  #0x40000000
         BEQ     __no_vfp_frame2
@@ -96,8 +96,8 @@ __no_vfp_frame2:
 rt_hw_context_switch_to:
     LDR     sp, [r0]            @ get new task stack pointer
 
-#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
         LDMIA   sp!, {r0}       @ get fpexc
+#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
         VMSR    fpexc, r0
         TST     r0,  #0x40000000
         BEQ     __no_vfp_frame_to
@@ -160,8 +160,8 @@ __no_vfp_frame_str_irq:
     CMP r1, #1
     BEQ rt_hw_context_switch_interrupt_do
 
-#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
         LDMIA   sp!, {r0}       @ get fpexc
+#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
         VMSR    fpexc, r0
         TST     r0,  #0x40000000
         BEQ     __no_vfp_frame_ldr_irq
@@ -181,9 +181,9 @@ __no_vfp_frame_ldr_irq:
 rt_hw_context_switch_interrupt_do:
     MOV     r1,  #0           @ clear flag
     STR     r1,  [r0]
-
-#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
+    
         LDMIA   sp!, {r0}       @ get fpexc
+#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
         VMSR    fpexc, r0
         TST     r0,  #0x40000000
         BEQ     __no_vfp_frame_do1
@@ -233,8 +233,8 @@ __no_vfp_frame_do2:
     LDR     r6,  [r6]
     LDR     sp,  [r6]         @ get new task's stack pointer
 
-#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
         LDMIA   sp!, {r0}       @ get fpexc
+#if defined (__VFP_FP__) && !defined(__SOFTFP__) && defined(RT_VFP_LAZY_STACKING)
         VMSR    fpexc, r0
         TST     r0,  #0x40000000
         BEQ     __no_vfp_frame_do3
